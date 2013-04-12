@@ -1,0 +1,118 @@
+# $Id$
+# Maintainer: equk <http://blog.equk.co.uk/>
+
+pkgname=vim-pybuild
+pkgdesc='Vi Improved, a highly configurable, improved version of the vi text editor. [custom build with python opts]'
+
+_topver=7.3
+
+_patchlevel=875
+__hgrev=acf7368a2acc
+_versiondir="vim${_topver//./}"
+pkgver=${_topver}.${_patchlevel}
+pkgrel=1
+arch=('i686' 'x86_64')
+license=('custom:vim')
+url="http://www.vim.org"
+depends=('gpm' 'ruby' 'libxt'
+         'desktop-file-utils' 'gtk2' 'lua' 'python' "vim-runtime=${pkgver}-${pkgrel}")
+provides=("vim=${pkgver}-${pkgrel}")
+conflicts=('vim')
+install=vim.install
+source=("ftp://ftp.archlinux.org/other/vim/vim-${pkgver}.tar.xz"
+        "ftp://ftp.archlinux.org/other/vim/vim-${pkgver}.tar.xz.sig"
+        'pythoncomplete.vim::http://www.vim.org/scripts/download_script.php?src_id=10872'
+        'vimrc'
+        'archlinux.vim'
+        'vim.desktop')
+md5sums=('4d71e8b9ef6a214b3651d69be19fadec'
+         'SKIP'
+         '6e7adfbd5d26c1d161030ec203a7f243'
+         '20fceda56badf201695c57999b0bc609'
+         '10353a61aadc3f276692d0e17db1478e'
+         'd90413bd21f400313a785bb4010120cd')
+
+# source PKGBUILD && mksource
+mksource() {
+
+  [[ -x /usr/bin/hg ]] || (echo "hg not found. Install mercurial." && return 1)
+
+  __hgroot='http://vim.googlecode.com/hg/'
+  __hgrepo='vim'
+  __hgbranch='default'
+
+  hg clone -b ${__hgbranch} -u ${__hgrev} "${__hgroot}${__hgrepo}" ${__hgrepo}
+
+  pushd ${__hgrepo}
+  if (( $(hg id -n) < $(hg id -nr ${__hgbranch}) )); then
+    printf 'You are not building the latest revision!\n'
+    printf "Consider updating __hgrev to $(hg id -r ${__hgbranch}).\n"
+  fi
+  popd
+
+  mv vim vim-${pkgver}
+  find vim-${pkgver} -depth -type d -name .hg -exec rm -rf {} \;
+  rm vim-${pkgver}/{.hgignore,.hgtags}
+  tar -cJf vim-${pkgver}.tar.xz vim-${pkgver}/*
+  rm -r vim-${pkgver}
+}
+
+build() {
+  cd "${srcdir}"
+
+  cp -a vim-${pkgver} vim-build
+
+  # define the place for the global vimrc file (/etc/vimrc)
+  sed -i 's|^.*\(#define SYS_.*VIMRC_FILE.*"\) .*$|\1|' \
+    vim-build/src/feature.h
+  sed -i 's|^.*\(#define VIMRC_FILE.*"\) .*$|\1|' \
+    vim-build/src/feature.h
+
+  (cd vim-build/src && autoconf)
+
+  cd "${srcdir}"/vim-build
+
+  ./configure --prefix=/usr --localstatedir=/var/lib/vim \
+    --with-features=big --with-compiledby=ArchLinux \
+    --enable-gpm --enable-acl \
+    --enable-multibyte --enable-cscope \
+    --enable-netbeans --enable-perlinterp --enable-pythoninterp \
+    --enable-python3interp --enable-rubyinterp --enable-luainterp
+
+  make
+}
+
+check() {
+  cd "${srcdir}"/vim-build
+  #make test
+}
+
+package() {
+
+  cd "${srcdir}"/vim-build
+  make -j1 VIMRCLOC=/etc DESTDIR="${pkgdir}" install
+
+  # provided by (n)vi in core
+  rm "${pkgdir}"/usr/bin/{ex,view}
+
+  # delete some manpages
+  find "${pkgdir}"/usr/share/man -type d -name 'man1' 2>/dev/null | \
+    while read _mandir; do
+    cd ${_mandir}
+    rm -f ex.1 view.1 # provided by (n)vi
+  done
+
+  # remove run-time
+  rm -r "${pkgdir}"/usr/share/vim
+ 
+  # freedesktop links
+  install -Dm644 "${srcdir}"/vim.desktop \
+    "${pkgdir}"/usr/share/applications/vim.desktop
+  install -Dm644 runtime/vim48x48.png "${pkgdir}"/usr/share/pixmaps/vim.png
+
+  # license
+   install -Dm644 "${srcdir}"/vim-${pkgver}/runtime/doc/uganda.txt \
+     "${pkgdir}"/usr/share/licenses/${pkgname}/license.txt
+}
+
+# vim:set sw=2 sts=2 et:
