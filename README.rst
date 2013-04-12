@@ -12,6 +12,6 @@ that doesn't exist within AUR.
 vim-pybuild
 -----------
 
-Customised python build which includes extra make options for using python
+Customised vim build which includes extra make options for using python
 
 * Vim - `Vim <http://www.vim.org/>`_
