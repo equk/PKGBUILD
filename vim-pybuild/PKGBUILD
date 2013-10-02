@@ -75,7 +75,8 @@ build() {
     --enable-gpm --enable-acl \
     --enable-multibyte --enable-cscope \
     --enable-netbeans --enable-perlinterp --enable-pythoninterp \
-    --enable-python3interp --enable-rubyinterp --enable-luainterp
+    --enable-python3interp --enable-rubyinterp --enable-luainterp \
+    --disable-gui
 
   make
 }
