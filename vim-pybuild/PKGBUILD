@@ -5,7 +5,7 @@ pkgname=vim-pybuild
 pkgdesc='Vi Improved, a highly configurable, improved version of the vi text editor. [custom build with python opts]'
 
 _topver=7.4
-_patchlevel=135
+_patchlevel=214
 _versiondir="vim${_topver//./}"
 pkgver=${_topver}.${_patchlevel}
 pkgrel=1
@@ -23,7 +23,7 @@ source=("ftp://ftp.archlinux.org/other/vim/vim-${pkgver}.tar.xz"
         'vimrc'
         'archlinux.vim'
         'vim.desktop')
-md5sums=('be672ce2a929503412378c998fc3dc27'
+md5sums=('5ec7d7f84955dacfef88e52ebc79b267'
          'SKIP'
          '6e7adfbd5d26c1d161030ec203a7f243'
          '20fceda56badf201695c57999b0bc609'
