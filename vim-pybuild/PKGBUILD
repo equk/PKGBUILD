@@ -1,14 +1,14 @@
 # $Id$
-# Maintainer: equk <http://blog.equk.co.uk/>
+# Maintainer: equk <http://equk.co.uk/>
 
 pkgname=vim-pybuild
 pkgdesc='Vi Improved, a highly configurable, improved version of the vi text editor. [custom build with python opts]'
 
 _topver=7.4
-_patchlevel=214
+_patchlevel=307
 _versiondir="vim${_topver//./}"
 pkgver=${_topver}.${_patchlevel}
-pkgrel=1
+pkgrel=4
 arch=('i686' 'x86_64')
 license=('custom:vim')
 url="http://www.vim.org"
@@ -23,7 +23,7 @@ source=("ftp://ftp.archlinux.org/other/vim/vim-${pkgver}.tar.xz"
         'vimrc'
         'archlinux.vim'
         'vim.desktop')
-md5sums=('5ec7d7f84955dacfef88e52ebc79b267'
+md5sums=('836c8b5bab883658c07b67cba445b667'
          'SKIP'
          '6e7adfbd5d26c1d161030ec203a7f243'
          '20fceda56badf201695c57999b0bc609'
