@@ -20,6 +20,16 @@ Customised vim build which includes extra make options for using python
 google-chrome-dev
 -----------------
 
+(no longer used as switched to chromium)
+
 Latest dev build of google chrome
 
 * Chrome Release Blog - `<http://googlechromereleases.blogspot.com/search/label/Dev%20updates>`_
+
+
+evince2-light
+-------------
+
+Because evince3 is ugly (rounded corners? + no page preview sidebar?)
+
+Also custom build with new patch to fix compile errors
