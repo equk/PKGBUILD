@@ -1,13 +1,14 @@
 # Contributor: Tom Wambold <tom5760@gmail.com>
+# Updated: 17-07-2015 equk - github.com/equk
 pkgname=python2-pcapy
 pkgver=0.10.8
-pkgrel=2
+pkgrel=3
 pkgdesc='Python module for the libpcap packet capture library.'
 arch=('i686' 'x86_64')
-url='http://corelabs.coresecurity.com/index.php?module=Wiki&action=view&type=tool&name=Pcapy'
+url='http://www.coresecurity.com/corelabs-research/open-source-tools/pcapy'
 license=('APACHE')
 depends=('python2' 'libpcap')
-source=("pcapy-$pkgver.tar.gz::http://corelabs.coresecurity.com/index.php?module=Wiki&action=attachment&type=tool&page=Pcapy&file=pcapy-$pkgver.tar.gz"
+source=("pcapy-$pkgver.tar_.gz::http://www.coresecurity.com/system/files/pcapy-$pkgver.tar_.gz"
         'pcapy_open_live_lo_error.patch'
         'LICENSE')
 md5sums=('f975fa8f0f6b51cf607649d28e2ccb5a'
