@@ -33,3 +33,12 @@ evince2-light
 Because evince3 is ugly (rounded corners? + no page preview sidebar?)
 
 Also custom build with new patch to fix compile errors
+
+python2-pcapy
+-------------
+
+* python2-pcapy - `pcapy <http://www.coresecurity.com/corelabs-research/open-source-tools/pcapy>`_
+
+This is a dependancy of ooni-probe by torproject
+
+* ooni-probe - `ooniprobe <https://github.com/TheTorProject/ooni-probe>`_
